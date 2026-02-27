@@ -62,7 +62,7 @@ public class arrayGenController implements Initializable {
         barsVisualization.clearBars();
         barContainer.getChildren().clear();
 
-        arr = ArrayGenerator.generateRandomArray(10);
+        arr = ArrayGenerator.generateRandomArray(100);
         for (int i = 0; i < arr.size(); i++) {
             Rectangle rectangle = new Rectangle();
             rectangle.setHeight(0);
@@ -90,14 +90,25 @@ public class arrayGenController implements Initializable {
         SortingStrategy<Integer> sortingAlgorithm = getSortingAlgorithm();
         SortingMetrics<Integer> metrics = new SortingMetrics<>();
         sortingAlgorithm.sort(arr, Comparator.naturalOrder(), metrics);
-        for (SortingStep<Integer> step : metrics.getSteps()) {
-            step.visualizeOn(barsVisualization);
-        }
-        barsVisualization.resetStyling();
-        for (Integer num : arr){
-            System.out.print(num + " ");
-        }
-        System.out.println();
+
+        Thread visualizationThread = new Thread(() -> {
+            for (SortingStep<Integer> step : metrics.getSteps()) {
+                step.visualizeOn(barsVisualization);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                barsVisualization.resetStyling();
+            }
+
+            for (Integer num : arr){
+                System.out.print(num + " ");
+            }
+            System.out.println();
+
+        });
+        visualizationThread.start();
 
     }
 

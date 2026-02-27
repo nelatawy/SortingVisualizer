@@ -31,7 +31,7 @@ public class VisualizationBars<T> {
 
     public void addBar(Rectangle bar, T value) {
         IntegerProperty height = new SimpleIntegerProperty(mappingFunction.applyAsInt(value));
-        bar.heightProperty().bind(height.multiply(20));
+        bar.heightProperty().bind(height.multiply(1));
         bars.add(bar);
         values.add(value);
         heights.add(height);
