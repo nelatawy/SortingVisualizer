@@ -1,23 +1,31 @@
 package Strategies;
 
+import Metrics.SortingMetrics;
+import Metrics.Steps.CompareStep;
+import Metrics.Steps.SwapStep;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class QuickSort implements SortingStrategy{
+public class QuickSort<E extends Comparable<E>> extends SortingStrategy<E>{
 
-    private <E extends Comparable<E>> int partition(List<E> list, Comparator<E> comparator) {
+    private int partition(List<E> list, Comparator<E> comparator, SortingMetrics<E> metrics) {
         E pivot = list.getLast();
         int lastSE = -1; //index to the last element that is not larger than the pivot
         int itr = 0;
         while(itr < list.size() - 1) {
-           if(comparator.compare(list.get(itr),pivot) <= 0){
-               lastSE += 1;
-               Collections.swap(list, itr, lastSE);
-           }
-           itr += 1;
+            super.addToMetrics(new CompareStep<>(itr, list.size() - 1), metrics);
+            if(comparator.compare(list.get(itr),pivot) <= 0){
+                lastSE += 1;
+                Collections.swap(list, itr, lastSE);
+                super.addToMetrics(new SwapStep<>(itr, lastSE), metrics);
+            }
+            itr += 1;
         }
-        Collections.swap(list, lastSE + 1, list.size() - 1); //position the pivot in it's correct spot
+
+        Collections.swap(list, lastSE + 1, list.size() - 1); //position the pivot in its correct spot
+        super.addToMetrics(new SwapStep<>(lastSE + 1, list.size() - 1), metrics);
         return lastSE + 1;
     }
 
@@ -25,18 +33,19 @@ public class QuickSort implements SortingStrategy{
     This method exploits the principle of randomized algorithms to avoid worst-case scenarios
     and get the O(n.lgn) average running time even in Sorted or Reversely Sorted situations
      */
-    private <E extends Comparable<E>> int randomizedPartition(List<E> list, Comparator<E> comparator) {
+    private int randomizedPartition(List<E> list, Comparator<E> comparator, SortingMetrics<E> metrics) {
         int swapIdx = (int)(Math.random()*(list.size() - 1));
         Collections.swap(list, swapIdx, list.size() - 1);
-        return partition(list, comparator);
+        super.addToMetrics(new SwapStep<>(swapIdx, list.size() - 1), metrics);
+        return partition(list, comparator, metrics);
     }
 
-    @Override
-    public <E extends Comparable<E>> List<E> sort(List<E> list, Comparator<E> comparator) {
+
+    public List<E> sort(List<E> list, Comparator<E> comparator, SortingMetrics<E> metrics) {
         if (list == null || list.isEmpty() || list.size() <= 1) {
             return list;
         }
-        int pivot_idx = partition(list, comparator);
+        int pivot_idx = partition(list, comparator,  metrics);
         sort(list.subList(0,pivot_idx), comparator);
         sort(list.subList(pivot_idx+1, list.size()), comparator);
         // since we are passing a sublist then we are passing a view to the same array
@@ -46,8 +55,5 @@ public class QuickSort implements SortingStrategy{
         // return the original array
     }
 
-    @Override
-    public <E extends Comparable<E>> List<E> sort(List<E> list) {
-        return List.of();
-    }
+
 }

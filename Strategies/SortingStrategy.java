@@ -1,11 +1,25 @@
 package Strategies;
 
+import Metrics.SortingMetrics;
+import Metrics.Steps.SortingStep;
+
 import java.util.Comparator;
 import java.util.List;
 
-public interface SortingStrategy {
+public abstract class SortingStrategy<E extends Comparable<E>>{
 
+    void addToMetrics(SortingStep<E> step, SortingMetrics<E> metrics) {
+        if (metrics != null){
+            metrics.addStep(step);
+        }
+    }
+    public abstract List<E> sort(List<E> list, Comparator<E> comparator, SortingMetrics<E> metrics);
 
-    public <E extends Comparable<E>> List<E> sort(List<E> list, Comparator<E> comparator);
-    public <E extends Comparable<E>> List<E> sort(List<E> list);
+    public List<E> sort(List<E> list, Comparator<E> comparator){
+        return sort(list, comparator, null);
+    }
+
+    public List<E> sort(List<E> list){
+        return sort(list, Comparator.naturalOrder());
+    }
 }
