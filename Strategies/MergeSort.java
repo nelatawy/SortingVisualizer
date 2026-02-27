@@ -10,48 +10,54 @@ import java.util.List;
 
 public class MergeSort<E extends Comparable<E>> extends SortingStrategy<E> {
 
-    private List<E> merge(List<E> array1, List<E> array2, Comparator<E> comparator, SortingMetrics<E> metrics) {
+
+    private List<E> merge(List<E> list, int start1, int start2, int end,
+                          Comparator<E> comparator, SortingMetrics<E> metrics) {
         List<E> merged = new ArrayList<>();
-        int itr1 = 0;
-        int itr2 = 0;
-        while (itr1 < array1.size() && itr2 < array2.size()) {
+        int itr1 = start1;
+        int itr2 = start2;
+        while (itr1 < start2 && itr2 < end) {
 
             super.addToMetrics(new CompareStep<>(itr1, itr2), metrics);
-            if (comparator.compare(array1.get(itr1), array2.get(itr2)) < 0) {
-                merged.add(array1.get(itr1));
+            if (comparator.compare(list.get(itr1), list.get(itr2)) < 0) {
+                merged.add(list.get(itr1));
                 itr1++;
             }
             else {
-                merged.add(array2.get(itr2));
+                merged.add(list.get(itr2));
                 itr2++;
             }
         }
-        while (itr1 < array1.size()) {
-            merged.add(array1.get(itr1));
+        while (itr1 < start2) {
+            merged.add(list.get(itr1));
             itr1++;
         }
-        while (itr2 < array2.size()) {
-            merged.add(array2.get(itr2));
+        while (itr2 < end) {
+            merged.add(list.get(itr2));
             itr2++;
         }
         return merged;
     }
 
     public List<E> sort(List<E> list, Comparator<E> comparator, SortingMetrics<E> metrics) {
-        if (list == null || list.size() <= 1) return list;
+        mergesort(list, 0, list.size(), comparator, metrics);
+        return list;
+    }
 
-        int mid = list.size() / 2;
-        List<E> left = sort(list.subList(0, mid), comparator, metrics);
-        List<E> right = sort(list.subList(mid, list.size()),  comparator, metrics);
-        List<E> merged = merge(left, right, comparator, metrics);
+    private void mergesort(List<E> list, int start, int end, Comparator<E> comparator, SortingMetrics<E> metrics) {
+        if (list == null || start >= end - 1) return;
+
+        int mid = (start + end) / 2;
+        mergesort(list, start, mid, comparator, metrics);
+        mergesort(list, mid, end, comparator, metrics);
+        List<E> merged = merge(list, start, mid, end, comparator, metrics);
         // instead of only returning the merged array we write it back in the original array before returning it
         // to mimic the behavior of sorting in place and have all the changes reflected in the original array
 
-        for (int i = 0; i < merged.size(); i++) {
-            list.set(i, merged.get(i));
-            super.addToMetrics(new SetStep<>(i, merged.get(i)), metrics);
+        for (int i = start; i < end; i++) {
+            list.set(i, merged.get(i - start));
+            super.addToMetrics(new SetStep<>(i, merged.get(i - start)), metrics);
         }
-        return list;
     }
 
 }

@@ -24,12 +24,14 @@ public class VisualizationBars<T> {
     public VisualizationBars(ToIntFunction<T> mapper) {
         bars = new ArrayList<Rectangle>();
         mappingFunction = mapper;
-        values = new ArrayList<T>();
+        values = new ArrayList<>();
+        heights = new ArrayList<>();
 
     }
+
     public void addBar(Rectangle bar, T value) {
         IntegerProperty height = new SimpleIntegerProperty(mappingFunction.applyAsInt(value));
-        bar.heightProperty().bind(height);
+        bar.heightProperty().bind(height.multiply(20));
         bars.add(bar);
         values.add(value);
         heights.add(height);
@@ -54,5 +56,17 @@ public class VisualizationBars<T> {
                 target.setFill(Color.BLUE);
                 break;
         }
+    }
+
+    public void resetStyling(){
+        for(int i = 0; i < bars.size(); i++){
+            markBarAt(i,Label.NONE);
+        }
+    }
+
+    public void clearBars(){
+        bars.clear();
+        values.clear();
+        heights.clear();
     }
 }

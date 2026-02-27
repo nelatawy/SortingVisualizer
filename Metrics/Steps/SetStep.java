@@ -12,7 +12,7 @@ public class SetStep<E> implements SortingStep<E> {
     }
     @Override
     public void visualizeOn(VisualizationBars<E> visualizationBars) {
-        visualizationBars.updateHeightAt(index, this.value);
+        visualizationBars.updateHeightAt(index, value);
         visualizationBars.markBarAt(index, VisualizationBars.Label.FOCUS);
     }
 }

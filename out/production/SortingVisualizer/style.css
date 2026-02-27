@@ -1,0 +1,80 @@
+#arrayGenScene {
+    -fx-background-color: #202020;
+    -fx-alignment: center;
+}
+
+#title {
+    -fx-text-fill: #00e5ff;
+    -fx-font-weight: 800;
+    -fx-font-size: 42;
+    -fx-font-family: "Glass TTY VT220";
+    -fx-alignment: center;
+}
+
+#barContainer {
+    -fx-border-color: #80f0ff;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: black;
+}
+
+/* -- ComboBox --*/
+
+/* outer combobox container */
+.combo-box {
+    -fx-background-color: #303030;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #006674;
+    -fx-border-width: 2px;
+    -fx-font-family: "Glass TTY VT220";
+    -fx-font-size: 18;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #00e5ff;
+    -fx-font-family: "Glass TTY VT220";
+    -fx-font-size: 16;
+}
+
+/* the dropdown container*/
+.combo-box-popup .list-view {
+    -fx-background-color: #202020;
+    -fx-border-color: #006674;
+    -fx-border-width: 2px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+/* entries within the container */
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #202020;
+    -fx-text-fill: #00e5ff;
+    -fx-font-family: "Glass TTY VT220";
+    -fx-font-size: 16;
+    -fx-padding: 6 10;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #006674;
+    -fx-text-fill: white;
+}
+
+
+/* --- Button ---*/
+.button {
+    -fx-font-family: "Glass TTY VT220";
+    -fx-text-fill: #00e5ff;
+    -fx-font-size: 18;
+    -fx-background-color: #252525;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #006674;
+    -fx-border-width: 1px;
+}
+
+.button:hover {
+    -fx-text-fill: white;
+    -fx-background-color: #006674;
+}

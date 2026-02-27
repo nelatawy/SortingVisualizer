@@ -38,6 +38,10 @@ public class ArrayGenerator {
         return generateSortedArray(size, 0, size, false);
     }
 
+    public static List<Integer> generateSortedArray(int size, boolean descending) {
+        return generateSortedArray(size, 0, size, descending);
+    }
+
     public static List<Integer> getArrayFromFile(Path path) throws IOException, NumberFormatException {
         String fileStr = Files.readString(path);
         String[] elements = fileStr.split(",");

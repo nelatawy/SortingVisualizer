@@ -13,6 +13,12 @@ public class SwapStep<E> implements SortingStep<E> {
     }
     @Override
     public void visualizeOn(VisualizationBars<E> visualizationBars) {
+        E first = visualizationBars.values.get(firstIdx);
+        E second = visualizationBars.values.get(secondIdx);
+
+        visualizationBars.updateHeightAt(firstIdx, second);
+        visualizationBars.updateHeightAt(secondIdx, first);
+
         visualizationBars.markBarAt(this.firstIdx, VisualizationBars.Label.FOCUS);
         visualizationBars.markBarAt(this.secondIdx, VisualizationBars.Label.FOCUS);
     }
