@@ -68,18 +68,19 @@ public class VisualizationBars<T> {
 
     public void markBarAt(int idx, Label label) {
         Rectangle target = bars.get(idx);
+        target.getStyleClass().removeAll("bar-sorted", "bar-highlight", "bar-focus");
+
         switch (label) {
             case SORTED:
-                target.setFill(Color.GREEN);
+                target.getStyleClass().add("bar-sorted");
                 break;
             case HIGHLIGHT:
-                target.setFill(Color.LIGHTBLUE);
+                target.getStyleClass().add("bar-highlight");
                 break;
             case FOCUS:
-                target.setFill(Color.ORANGE);
+                target.getStyleClass().add("bar-focus");
                 break;
             case NONE:
-                target.setFill(Color.BLUE);
                 break;
         }
     }

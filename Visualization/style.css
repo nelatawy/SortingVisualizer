@@ -2,7 +2,9 @@
     -fx-background-color: #202020;
     -fx-alignment: center;
 }
-
+.label {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.8), 15, 0, 0, 0);
+}
 #title {
     -fx-text-fill: #00e5ff;
     -fx-font-weight: 800;
@@ -83,4 +85,75 @@
 .button:hover {
     -fx-text-fill: white;
     -fx-background-color: #006674;
+}
+
+
+/* --- TextField ---*/
+.text-field {
+    -fx-background-color: #252525;
+    -fx-text-fill: #00e5ff;
+    -fx-border-color: #006674;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-family: "Glass TTY VT220";
+    -fx-font-size: 16;
+}
+
+.text-field:focused {
+    -fx-border-color: #00e5ff;
+    -fx-border-width: 2px;
+}
+
+/* --- Label ---*/
+.label {
+    -fx-text-fill: #00e5ff;
+    -fx-font-family: "Glass TTY VT220";
+}
+
+/* --- Slider ---*/
+.slider .track {
+    -fx-background-color: #303030;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5px;
+}
+
+.slider .thumb {
+    -fx-background-color: #00e5ff;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.6), 10, 0, 0, 0);
+}
+
+.slider .thumb:hover {
+    -fx-background-color: white;
+}
+
+/* --- Bars ---*/
+.bar {
+    -fx-fill: #1a7a8a;
+    -fx-stroke: transparent;
+    -fx-arc-width: 10;
+    -fx-arc-height: 10;
+}
+
+.bar:hover {
+    -fx-fill: #00e5ff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.8), 15, 0, 0, 0);
+}
+
+.bar-sorted {
+    -fx-fill: #00ff41;
+    /* Matrix Green */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 255, 65, 0.5), 10, 0, 0, 0);
+}
+
+.bar-highlight {
+    -fx-fill: #00e5ff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.7), 10, 0, 0, 0);
+}
+
+.bar-focus {
+    -fx-fill: #ff9d00;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 157, 0, 0.7), 10, 0, 0, 0);
 }
