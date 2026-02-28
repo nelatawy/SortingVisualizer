@@ -1,4 +1,4 @@
-package Visualization;
+package Visualization.Enums;
 
 public enum SortingAlgorithm {
     BUBBLE,

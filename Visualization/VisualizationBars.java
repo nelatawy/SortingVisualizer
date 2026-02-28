@@ -16,6 +16,7 @@ public class VisualizationBars<T> {
     public List<IntegerProperty> heights;
 
     public enum Label {
+        SORTED,
         HIGHLIGHT,
         FOCUS,
         NONE,
@@ -27,6 +28,12 @@ public class VisualizationBars<T> {
         values = new ArrayList<>();
         heights = new ArrayList<>();
 
+    }
+    public VisualizationBars(VisualizationBars<T> other) {
+        bars = new ArrayList<>(other.bars);
+        mappingFunction = other.mappingFunction;
+        values = new ArrayList<>(other.values);
+        heights = new ArrayList<>(other.heights);
     }
 
     public void addBar(Rectangle bar, T value) {
@@ -46,6 +53,9 @@ public class VisualizationBars<T> {
     public void markBarAt(int idx, Label label) {
         Rectangle target = bars.get(idx);
         switch (label) {
+            case SORTED:
+                target.setFill(Color.GREEN);
+                break;
             case HIGHLIGHT:
                 target.setFill(Color.LIGHTBLUE);
                 break;
@@ -68,5 +78,11 @@ public class VisualizationBars<T> {
         bars.clear();
         values.clear();
         heights.clear();
+    }
+
+    public void markAllSorted(){
+        for(int i = 0; i < bars.size(); i++){
+            markBarAt(i,Label.SORTED);
+        }
     }
 }

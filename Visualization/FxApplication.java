@@ -1,3 +1,5 @@
+package Visualization;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,9 +11,9 @@ import java.io.IOException;
 public class FxApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Visualization/fxml/arrayGen.fxml"));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/Visualization/style.css").toExternalForm());
 
         stage.setResizable(false);
         stage.setTitle("Sorting Visualizer");

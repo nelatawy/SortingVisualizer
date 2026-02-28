@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="visualizer" minHeight="600.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" styleClass="scene" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Visualization.Controllers.sortingController">
+   <children>
+
+      <Label fx:id="title" contentDisplay="CENTER" layoutX="63.0" layoutY="14.0" prefHeight="59.0" prefWidth="474.0" text="Sorting Visualizer" textAlignment="CENTER">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+
+      <HBox fx:id="barContainer" alignment="CENTER" layoutX="32.0" layoutY="236.0" prefHeight="255.0" prefWidth="536.0" />
+
+
+      <ComboBox id="algorithmSelector" fx:id="algorithmSelector" layoutX="66.0" layoutY="106.0" prefHeight="46.0" prefWidth="229.0" promptText="Sorting Algorithm" />
+
+
+
+      <Label layoutX="247.0" layoutY="206.0" prefHeight="18.0" prefWidth="105.0" text="Preview">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Button layoutX="181.0" layoutY="506.0" mnemonicParsing="false" onAction="#goToArrayGen" prefHeight="59.0" prefWidth="229.0" text="Generate Another Array" />
+      <Button layoutX="308.0" layoutY="106.0" mnemonicParsing="false" onAction="#visualizeSort" prefHeight="46.0" prefWidth="229.0" text="Sort" />
+
+   </children>
+</AnchorPane>
