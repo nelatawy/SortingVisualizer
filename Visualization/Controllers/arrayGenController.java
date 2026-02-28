@@ -53,7 +53,7 @@ public class arrayGenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        visualizationBars = new VisualizationBars<>(e -> e);
+        visualizationBars = new VisualizationBars<Integer>(e-> e, (int)barContainer.getPrefHeight());
         arr = new ArrayList<>();
 
         arrayModeSelector.getItems().addAll(ArrayGenMode.values());
@@ -96,10 +96,10 @@ public class arrayGenController implements Initializable {
     }
 
     private void linkToVisBars() {
+        int maxValue = Collections.max(arr);
         barContainer.setAlignment(Pos.BOTTOM_LEFT);
         for (int i = 0; i < arr.size(); i++) {
             Rectangle rectangle = new Rectangle();
-            rectangle.setHeight(0);
             rectangle.setWidth(barContainer.getPrefWidth() / arr.size());
             rectangle.setFill(Color.BLUE);
             rectangle.getStyleClass().add("bar");

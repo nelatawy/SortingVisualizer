@@ -26,9 +26,8 @@
     -fx-background-radius: 5px;
 }
 
-/* -- ComboBox --*/
+/* ComboBox */
 
-/* outer combobox container */
 .combo-box {
     -fx-background-color: #303030;
     -fx-border-radius: 10px;
@@ -46,7 +45,7 @@
     -fx-font-size: 16;
 }
 
-/* the dropdown container*/
+/* the dropdown container */
 .combo-box-popup .list-view {
     -fx-background-color: #202020;
     -fx-border-color: #006674;
@@ -55,7 +54,7 @@
     -fx-background-radius: 6px;
 }
 
-/* entries within the container */
+/* elements within the container */
 .combo-box-popup .list-view .list-cell {
     -fx-background-color: #202020;
     -fx-text-fill: #00e5ff;
@@ -70,7 +69,7 @@
 }
 
 
-/* --- Button ---*/
+/* Button */
 .button {
     -fx-font-family: "Glass TTY VT220";
     -fx-text-fill: #00e5ff;
@@ -88,7 +87,7 @@
 }
 
 
-/* --- TextField ---*/
+/* TextField */
 .text-field {
     -fx-background-color: #252525;
     -fx-text-fill: #00e5ff;
@@ -105,13 +104,13 @@
     -fx-border-width: 2px;
 }
 
-/* --- Label ---*/
+/* Label */
 .label {
     -fx-text-fill: #00e5ff;
     -fx-font-family: "Glass TTY VT220";
 }
 
-/* --- Slider ---*/
+/* Slider */
 .slider .track {
     -fx-background-color: #303030;
     -fx-background-insets: 0;
@@ -129,7 +128,7 @@
     -fx-background-color: white;
 }
 
-/* --- Bars ---*/
+/* Bars */
 .bar {
     -fx-fill: #1a7a8a;
     -fx-stroke: transparent;
@@ -144,7 +143,6 @@
 
 .bar-sorted {
     -fx-fill: #00ff41;
-    /* Matrix Green */
     -fx-effect: dropshadow(three-pass-box, rgba(0, 255, 65, 0.5), 10, 0, 0, 0);
 }
 

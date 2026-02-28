@@ -1,11 +1,14 @@
 package Visualization;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.ToIntFunction;
 
@@ -13,7 +16,9 @@ public class VisualizationBars<T> {
     public List<Rectangle> bars;
     public List<T> values;
     private final ToIntFunction<T> mappingFunction;
-    public List<IntegerProperty> heights;
+    public List<DoubleProperty> heights;
+    private final DoubleProperty max;
+    private final DoubleProperty containerHeight;
 
     public enum Label {
         SORTED,
@@ -22,25 +27,26 @@ public class VisualizationBars<T> {
         NONE,
     }
 
-    public VisualizationBars(ToIntFunction<T> mapper) {
-        bars = new ArrayList<Rectangle>();
-        mappingFunction = mapper;
-        values = new ArrayList<>();
-        heights = new ArrayList<>();
+    public VisualizationBars(ToIntFunction<T> mapper, double containerHeight) {
+        this.bars = new ArrayList<Rectangle>();
+        this.mappingFunction = mapper;
+        this.values = new ArrayList<>();
+        this.heights = new ArrayList<>();
+        this.containerHeight = new SimpleDoubleProperty(containerHeight);
+        this.max = new SimpleDoubleProperty((int)-1e9);
     }
 
     public VisualizationBars(VisualizationBars<T> other) {
-        mappingFunction = other.mappingFunction;
-        bars = new ArrayList<>();
-        values = new ArrayList<>(other.values);
-        heights = new ArrayList<>();
+        this.mappingFunction = other.mappingFunction;
+        this.bars = new ArrayList<>();
+        this.values = new ArrayList<>(other.values);
+        this.heights = new ArrayList<>();
+        this.containerHeight = new SimpleDoubleProperty(other.containerHeight.get());
+        this.max = new SimpleDoubleProperty(other.max.get());
 
         for (int i = 0; i < other.bars.size(); i++) {
             Rectangle copy = copyRectangle(other.bars.get(i));
-            IntegerProperty heightProp = new SimpleIntegerProperty(other.heights.get(i).get());
-            copy.heightProperty().bind(heightProp.multiply(1));
-            bars.add(copy);
-            heights.add(heightProp);
+            addBar(copy, this.values.get(i));
         }
     }
 
@@ -54,8 +60,13 @@ public class VisualizationBars<T> {
     }
 
     public void addBar(Rectangle bar, T value) {
-        IntegerProperty height = new SimpleIntegerProperty(mappingFunction.applyAsInt(value));
-        bar.heightProperty().bind(height.multiply(1));
+        int intVal = mappingFunction.applyAsInt(value);
+
+        if (intVal > max.get()) {
+            max.set(intVal);
+        }
+        DoubleProperty height = new SimpleDoubleProperty(intVal);
+        bar.heightProperty().bind(height.divide(max).multiply(containerHeight));
         bars.add(bar);
         values.add(value);
         heights.add(height);
@@ -92,6 +103,7 @@ public class VisualizationBars<T> {
     }
 
     public void clearBars() {
+        max.set(-1e9);
         bars.clear();
         values.clear();
         heights.clear();

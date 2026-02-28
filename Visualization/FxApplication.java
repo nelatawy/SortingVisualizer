@@ -15,7 +15,7 @@ public class FxApplication extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/Visualization/style.css").toExternalForm());
 
-        stage.setResizable(false);
+
         stage.setTitle("Sorting Visualizer");
         stage.setScene(scene);
         stage.sizeToScene();
