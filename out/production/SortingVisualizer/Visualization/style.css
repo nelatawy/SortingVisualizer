@@ -18,6 +18,12 @@
     -fx-background-color: black;
 }
 
+.bar {
+    -fx-fill: #21b1c5;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
 /* -- ComboBox --*/
 
 /* outer combobox container */

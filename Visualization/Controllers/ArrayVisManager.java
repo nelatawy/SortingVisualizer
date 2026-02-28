@@ -18,15 +18,16 @@ public class ArrayVisManager {
         return instance;
     }
 
-    public void loadSnapshot(List<Integer> array,  VisualizationBars<Integer> visualizationBars) {
+    public void loadSnapshot(List<Integer> array, VisualizationBars<Integer> visualizationBars) {
         this.array = new ArrayList<>(array);
-        this.visualizationBars = visualizationBars;
+        this.visualizationBars = new VisualizationBars<>(visualizationBars);
     }
 
-    public List<Integer> getArraySnapshot(){
+    public List<Integer> getArraySnapshot() {
         return new ArrayList<>(array);
     }
-    public VisualizationBars<Integer> getVisualizationBarsSnapshot(){
+
+    public VisualizationBars<Integer> getVisualizationBarsSnapshot() {
         return new VisualizationBars<>(visualizationBars);
     }
 }

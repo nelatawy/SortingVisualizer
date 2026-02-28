@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -30,6 +31,12 @@
       </Label>
       <Button layoutX="181.0" layoutY="506.0" mnemonicParsing="false" onAction="#goToArrayGen" prefHeight="59.0" prefWidth="229.0" text="Generate Another Array" />
       <Button layoutX="308.0" layoutY="106.0" mnemonicParsing="false" onAction="#visualizeSort" prefHeight="46.0" prefWidth="229.0" text="Sort" />
+      <Slider fx:id="speedSlider" blockIncrement="0.0" layoutX="135.0" layoutY="166.0" max="10.0" min="1.0" prefHeight="31.0" prefWidth="157.0" />
+      <Label layoutX="82.0" layoutY="172.0" prefHeight="20.0" prefWidth="46.0" text="Speed">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
 
    </children>
 </AnchorPane>

@@ -15,7 +15,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -35,7 +37,10 @@ public class sortingController implements Initializable {
     @FXML
     private HBox barContainer;
 
-    private double frameRate = 24;
+    @FXML
+    private Slider speedSlider;
+
+    private Timeline timeline;
 
     SortingMetrics<Integer> metrics;
 
@@ -60,6 +65,10 @@ public class sortingController implements Initializable {
         algorithmSelector.getItems().addAll(SortingAlgorithm.values());
         algorithmSelector.setValue(SortingAlgorithm.BUBBLE);
 
+        speedSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            timeline.setRate(newVal.doubleValue());
+        });
+
         isPaused = false;
         priorlySorted = false;
     }
@@ -71,6 +80,8 @@ public class sortingController implements Initializable {
         for (Rectangle bar : visualizationBars.bars) {
             barContainer.getChildren().add(bar);
         }
+        timeline = new Timeline();
+        metrics = new SortingMetrics<>();
     }
 
     private SortingStrategy<Integer> getSortingAlgorithm() {
@@ -93,7 +104,6 @@ public class sortingController implements Initializable {
             reset();
         }
         // to allow for resets
-
         SortingStrategy<Integer> sortingAlgorithm = getSortingAlgorithm();
         sortingAlgorithm.sort(arr, Comparator.naturalOrder(), metrics);
         priorlySorted = true;
@@ -103,16 +113,16 @@ public class sortingController implements Initializable {
 
     public void visualize(List<SortingStep<Integer>> steps) {
         isVisualizing = true;
-        Timeline timeline = new Timeline();
+
         for (int i = 0; i < steps.size(); i++) {
             int idx = i;
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/frameRate * (i + 1)), e -> {
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/24.0 * (i + 1)), e -> {
                 visualizationBars.resetStyling();
                 steps.get(idx).visualizeOn(visualizationBars);
             });
             timeline.getKeyFrames().add(keyFrame);
         }
-        KeyFrame sortedKF = new KeyFrame(Duration.millis(1000/frameRate * (steps.size() + 1)), e -> {
+        KeyFrame sortedKF = new KeyFrame(Duration.millis(1000/24.0 * (steps.size() + 1)), e -> {
             visualizationBars.markAllSorted();
         });
         timeline.getKeyFrames().add(sortedKF);

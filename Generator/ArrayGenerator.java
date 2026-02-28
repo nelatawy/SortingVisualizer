@@ -1,9 +1,13 @@
 package Generator;
 
+import Strategies.MergeSort;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ArrayGenerator {
@@ -21,18 +25,8 @@ public class ArrayGenerator {
     }
 
     public static List<Integer> generateSortedArray(int size, int from, int to, boolean descending) {
-        List<Integer> list = new ArrayList<>();
-        int lastVal = from;
-        for (int i = 0; i < size; i++) {
-            int newVal;
-            if (descending) {
-                newVal = from + (int)(Math.random() * (lastVal - from));
-            } else {
-                newVal = lastVal + (int)(Math.random() * (to - lastVal));
-            }
-            lastVal = newVal;
-            list.add(newVal);
-        }
+        List<Integer> list = generateRandomArray(size, from, to);
+        new MergeSort<Integer>().sort(list, (descending) ? Comparator.reverseOrder() : Comparator.naturalOrder());
         return list;
     }
 

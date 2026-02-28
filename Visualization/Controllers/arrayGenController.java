@@ -1,7 +1,6 @@
 package Visualization.Controllers;
 
 import Visualization.Enums.ArrayGenMode;
-import Visualization.Enums.SortingAlgorithm;
 import Visualization.VisualizationBars;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +44,7 @@ public class arrayGenController implements Initializable {
     private TextFormatter<String> createNumberFormatter() {
         return new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("\\d*")) {
+            if (newText.matches("\\d*") && newText.length() <= 3) {
                 return change;
             }
             return null;
@@ -103,6 +102,7 @@ public class arrayGenController implements Initializable {
             rectangle.setHeight(0);
             rectangle.setWidth(barContainer.getPrefWidth() / arr.size());
             rectangle.setFill(Color.BLUE);
+            rectangle.getStyleClass().add("bar");
             visualizationBars.addBar(rectangle, arr.get(i));
             barContainer.getChildren().add(rectangle);
         }

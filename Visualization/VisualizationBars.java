@@ -27,13 +27,30 @@ public class VisualizationBars<T> {
         mappingFunction = mapper;
         values = new ArrayList<>();
         heights = new ArrayList<>();
-
     }
+
     public VisualizationBars(VisualizationBars<T> other) {
-        bars = new ArrayList<>(other.bars);
         mappingFunction = other.mappingFunction;
+        bars = new ArrayList<>();
         values = new ArrayList<>(other.values);
-        heights = new ArrayList<>(other.heights);
+        heights = new ArrayList<>();
+
+        for (int i = 0; i < other.bars.size(); i++) {
+            Rectangle copy = copyRectangle(other.bars.get(i));
+            IntegerProperty heightProp = new SimpleIntegerProperty(other.heights.get(i).get());
+            copy.heightProperty().bind(heightProp.multiply(1));
+            bars.add(copy);
+            heights.add(heightProp);
+        }
+    }
+
+    public static Rectangle copyRectangle(Rectangle original) {
+        Rectangle copy = new Rectangle();
+        copy.setWidth(original.getWidth());
+        copy.setHeight(original.getHeight());
+        copy.getStyleClass().addAll(original.getStyleClass());
+
+        return copy;
     }
 
     public void addBar(Rectangle bar, T value) {
@@ -47,7 +64,6 @@ public class VisualizationBars<T> {
     public void updateHeightAt(int index, T value) {
         values.set(index, value);
         heights.get(index).set(mappingFunction.applyAsInt(value));
-
     }
 
     public void markBarAt(int idx, Label label) {
@@ -68,21 +84,21 @@ public class VisualizationBars<T> {
         }
     }
 
-    public void resetStyling(){
-        for(int i = 0; i < bars.size(); i++){
-            markBarAt(i,Label.NONE);
+    public void resetStyling() {
+        for (int i = 0; i < bars.size(); i++) {
+            markBarAt(i, Label.NONE);
         }
     }
 
-    public void clearBars(){
+    public void clearBars() {
         bars.clear();
         values.clear();
         heights.clear();
     }
 
-    public void markAllSorted(){
-        for(int i = 0; i < bars.size(); i++){
-            markBarAt(i,Label.SORTED);
+    public void markAllSorted() {
+        for (int i = 0; i < bars.size(); i++) {
+            markBarAt(i, Label.SORTED);
         }
     }
 }
