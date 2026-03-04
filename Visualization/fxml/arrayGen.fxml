@@ -20,17 +20,11 @@
             </Label>
             <HBox alignment="CENTER" spacing="20.0">
                <children>
-                  <ComboBox id="arrayModeSelector" fx:id="arrayModeSelector" prefHeight="50.0" prefWidth="200.0" promptText="Array Mode" />
+                  <ComboBox id="arrayModeSelector" fx:id="arrayModeSelector" onAction="#onModeSelected" prefHeight="50.0" prefWidth="200.0" promptText="Array Mode" />
                   <Button mnemonicParsing="false" onAction="#genVisArray" prefHeight="50.0" prefWidth="180.0" text="Generate Array" wrapText="true" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" spacing="20.0">
-               <children>
-                  <TextField fx:id="fromField" prefHeight="40.0" prefWidth="100.0" promptText="From" />
-                  <TextField fx:id="toField" prefHeight="40.0" prefWidth="100.0" promptText="To" />
-                  <TextField fx:id="size" prefHeight="40.0" prefWidth="100.0" promptText="Size" />
-               </children>
-            </HBox>
+            <HBox fx:id = "paramBox" alignment="CENTER" spacing="20.0"/>
       
             <Label alignment="CENTER" prefHeight="18.0" prefWidth="105.0" text="Preview">
                <font>
