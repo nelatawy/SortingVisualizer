@@ -14,14 +14,17 @@ import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class ComparisonController implements Initializable {
 
 
 
-    class SortStat {
+    static class SortStat {
 
         final StringProperty algorithm = new SimpleStringProperty();
         final LongProperty comparisons = new SimpleLongProperty();
@@ -40,6 +43,15 @@ public class ComparisonController implements Initializable {
             this.maxRuntime.set(maxRuntime);
             this.meanRuntime.set(meanRuntime);
         }
+        public String toString() {
+            return  this.algorithm.get() + "," +
+                    this.comparisons.get() + "," +
+                    this.swaps.get() + "," +
+                    this.writes.get() + "," +
+                    this.minRuntime.get() + "," +
+                    this.meanRuntime.get();
+        }
+
     }
 
 
@@ -138,9 +150,28 @@ public class ComparisonController implements Initializable {
         algorithmStats.getItems().add(
                 new SortStat(
                         checkBox.getText(),
-                        comparisonCnt,  swapCnt, setCnt,
+                        comparisonCnt, swapCnt, setCnt,
                         minRuntime, maxRuntime, meanRuntime
                 ));
     }
+
+    @FXML
+    private void resetAlgorithmStats(ActionEvent actionEvent) {
+        algorithmStats.getItems().clear();
+    }
+
+    @FXML
+    private void saveAlgorithmStats(ActionEvent actionEvent) throws IOException {
+        StringBuilder outStr = new StringBuilder();
+        outStr.append("Algorithm,Comparisons,Swaps,Writes,Min Runtime,Max Runtime,Mean Runtime\n");
+        for (SortStat stat : algorithmStats.getItems() ){
+            outStr.append(stat.toString()).append("\n");
+        }
+        Files.writeString(Path.of("log" + UUID.randomUUID() + ".csv"),outStr.toString());
+        return;
+
+    }
+
+
 
 }

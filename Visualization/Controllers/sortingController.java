@@ -84,6 +84,17 @@ public class sortingController implements Initializable {
         metrics = new SortingMetrics<>();
     }
 
+    @FXML
+    private void pause(){
+        timeline.pause();
+        isPaused = true;
+    }
+
+    @FXML
+    private void resume(){
+        timeline.play();
+        isPaused = false;
+    }
 
 
     @FXML

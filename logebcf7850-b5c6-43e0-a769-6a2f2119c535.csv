@@ -1,0 +1,3 @@
+Algorithm,Comparisons,Swaps,Writes,Min Runtime,Max Runtime,Mean Runtime
+BUBBLE,760,174,0,0.341595,0.6941504999999999
+SELECTION,380,28,0,0.106691,0.1156085
