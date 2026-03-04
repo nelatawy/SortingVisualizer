@@ -3,13 +3,13 @@
     -fx-alignment: center;
 }
 .label {
+    -fx-text-fill: #00e5ff;
+    -fx-font-family: "Glass TTY VT220";
     -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.8), 15, 0, 0, 0);
 }
 #title {
-    -fx-text-fill: #00e5ff;
     -fx-font-weight: 800;
     -fx-font-size: 42;
-    -fx-font-family: "Glass TTY VT220";
     -fx-alignment: center;
 }
 
@@ -45,7 +45,7 @@
     -fx-font-size: 16;
 }
 
-/* the dropdown container */
+
 .combo-box-popup .list-view {
     -fx-background-color: #202020;
     -fx-border-color: #006674;
@@ -54,7 +54,6 @@
     -fx-background-radius: 6px;
 }
 
-/* elements within the container */
 .combo-box-popup .list-view .list-cell {
     -fx-background-color: #202020;
     -fx-text-fill: #00e5ff;
@@ -69,7 +68,7 @@
 }
 
 
-/* Button */
+
 .button {
     -fx-font-family: "Glass TTY VT220";
     -fx-text-fill: #00e5ff;
@@ -79,15 +78,22 @@
     -fx-background-radius: 10px;
     -fx-border-color: #006674;
     -fx-border-width: 1px;
-}
 
+
+}
+.button .text {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.6), 13, 0, 0, 0);
+}
 .button:hover {
     -fx-text-fill: white;
     -fx-background-color: #006674;
 }
 
+#compare_button {
 
-/* TextField */
+}
+
+
 .text-field {
     -fx-background-color: #252525;
     -fx-text-fill: #00e5ff;
@@ -102,12 +108,6 @@
 .text-field:focused {
     -fx-border-color: #00e5ff;
     -fx-border-width: 2px;
-}
-
-/* Label */
-.label {
-    -fx-text-fill: #00e5ff;
-    -fx-font-family: "Glass TTY VT220";
 }
 
 /* Slider */
@@ -154,4 +154,66 @@
 .bar-focus {
     -fx-fill: #ff9d00;
     -fx-effect: dropshadow(three-pass-box, rgba(255, 157, 0, 0.7), 10, 0, 0, 0);
+}
+
+.check-box {
+    -fx-text-fill: #00e5ff;
+    -fx-font-family: "Glass TTY VT220";
+    -fx-font-size: 16;
+    -fx-padding: 10;
+}
+#topBar .label {
+    -fx-font-size: 20;
+    -fx-padding: 5;
+}
+#algorithmCheckboxes {
+    -fx-border-color: #80f0ff;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-max-width: 600;
+}
+
+.text-field {
+    -fx-max-width: 100;
+}
+
+
+.table-view {
+    -fx-background-color: black;
+    -fx-border-color: #80f0ff;
+    -fx-border-width: 2;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+.table-view .column-header-background {
+    -fx-background-color: #303030;
+}
+.table-view .column-header {
+    -fx-background-color: #252525;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #00e5ff;
+    -fx-font-size: 16;
+    -fx-font-family: "Glass TTY VT220";
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.8), 15, 0, 0, 0);
+}
+
+.table-row-cell {
+    -fx-background-color: #202020;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #252525;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #00e5ff;
+}
+
+.table-cell {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #00e5ff;
+    -fx-font-family: "Glass TTY VT220" ;
+    -fx-background-color: transparent;
 }

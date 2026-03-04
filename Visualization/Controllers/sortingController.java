@@ -84,16 +84,7 @@ public class sortingController implements Initializable {
         metrics = new SortingMetrics<>();
     }
 
-    private SortingStrategy<Integer> getSortingAlgorithm() {
-        return switch (algorithmSelector.getValue()) {
-            case BUBBLE -> new BubbleSort<>();
-            case QUICK -> new QuickSort<>();
-            case HEAP -> new HeapSort<>();
-            case INSERTION -> new InsertionSort<>();
-            case SELECTION -> new SelectionSort<>();
-            case MERGE -> new MergeSort<>();
-        };
-    }
+
 
     @FXML
     public void visualizeSort() {
@@ -104,7 +95,7 @@ public class sortingController implements Initializable {
             reset();
         }
         // to allow for resets
-        SortingStrategy<Integer> sortingAlgorithm = getSortingAlgorithm();
+        SortingStrategy<Integer> sortingAlgorithm = CommonUtils.getSortingAlgorithm(algorithmSelector.getValue());
         sortingAlgorithm.sort(arr, Comparator.naturalOrder(), metrics);
         priorlySorted = true;
         visualize(metrics.getSteps());

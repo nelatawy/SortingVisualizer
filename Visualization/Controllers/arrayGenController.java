@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import static Visualization.Controllers.CommonUtils.createNumberFormatter;
+
 public class arrayGenController implements Initializable {
 
 
@@ -48,19 +50,13 @@ public class arrayGenController implements Initializable {
     @FXML
     private HBox barContainer;
 
+    @FXML
+    private Button goToVisualizeBtn;
+
     VisualizationBars<Integer> visualizationBars;
 
     List<Integer> arr;
 
-    private TextFormatter<String> createNumberFormatter() {
-        return new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("\\d*") && newText.length() <= 3) {
-                return change;
-            }
-            return null;
-        });
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,6 +79,7 @@ public class arrayGenController implements Initializable {
         fromField.setText("1");
         toField.setText("100");
         size.setText("20");
+        goToVisualizeBtn.setDisable(true);
 
     }
 
@@ -90,6 +87,12 @@ public class arrayGenController implements Initializable {
     @FXML
     public void genVisArray() throws IOException {
         generateArray();
+        if (arr.size() > 250) {
+            ArrayVisManager.getInstance().loadSnapshot(arr, visualizationBars); //adding them as is
+            goToVisualizeBtn.setDisable(true); // prevent user from trying to visualize it
+            return;
+        }
+        goToVisualizeBtn.setDisable(false);
         linkToVisBars();
 
     }
@@ -107,7 +110,7 @@ public class arrayGenController implements Initializable {
             case REVERSED -> ArrayGenerator.generateSortedArray(arraySize, from, to, true);
             case RANDOM -> ArrayGenerator.generateRandomArray(arraySize, from, to);
             case FILE -> ArrayGenerator.getArrayFromFile(selectedFile.toPath());
-            case null, default -> new ArrayList<>();
+            case null -> new ArrayList<>();
         };
 
     }
@@ -125,18 +128,15 @@ public class arrayGenController implements Initializable {
         ArrayVisManager.getInstance().loadSnapshot(arr, visualizationBars);
     }
 
+
     @FXML
     private void goToVisualizer(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/Visualization/fxml/visualizer.fxml"));
+        CommonUtils.goTo(event, "visualizer");
+    }
 
-        Parent newRoot = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource())
-                .getScene()
-                .getWindow();
-
-        stage.getScene().setRoot(newRoot);
+    @FXML
+    private void goToComparison(ActionEvent event) throws IOException {
+        CommonUtils.goTo(event, "comparison");
     }
 
     @FXML

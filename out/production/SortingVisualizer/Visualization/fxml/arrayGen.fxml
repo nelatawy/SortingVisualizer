@@ -9,36 +9,35 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.VBox?>
-<AnchorPane fx:id="arrayGen" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Visualization.Controllers.arrayGenController">
-   <children>
-      <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="title" contentDisplay="CENTER" prefHeight="59.0" prefWidth="476.0" text="Array Generator" textAlignment="CENTER">
-               <font>
-                  <Font size="32.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER" spacing="20.0">
-               <children>
-                  <ComboBox id="arrayModeSelector" fx:id="arrayModeSelector" onAction="#onModeSelected" prefHeight="50.0" prefWidth="200.0" promptText="Array Mode" />
-                  <Button mnemonicParsing="false" onAction="#genVisArray" prefHeight="50.0" prefWidth="180.0" text="Generate Array" wrapText="true" />
-               </children>
-            </HBox>
-            <HBox fx:id = "paramBox" alignment="CENTER" spacing="20.0"/>
-      
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="105.0" text="Preview">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-            <HBox fx:id="barContainer" alignment="BOTTOM_CENTER" prefHeight="255.0" prefWidth="800.0" style="-fx-background-color: black; -fx-border-color: #006674; -fx-border-radius: 5;" />
-            <HBox alignment="CENTER" spacing="30.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#goToVisualizer" prefHeight="50.0" prefWidth="250.0" text="Visualize a Sorting Algorithm" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" text="Compare Between Algorithms" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </children>
+<AnchorPane fx:id="arrayGen" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Visualization.Controllers.arrayGenController">
+   <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label fx:id="title" contentDisplay="CENTER" prefHeight="59.0" prefWidth="476.0" text="Array Generator"
+             textAlignment="CENTER">
+         <font>
+            <Font size="32.0"/>
+         </font>
+      </Label>
+      <HBox alignment="CENTER" spacing="20.0">
+         <ComboBox id="arrayModeSelector" fx:id="arrayModeSelector" onAction="#onModeSelected" prefHeight="50.0"
+                   prefWidth="200.0" promptText="Array Mode"/>
+         <Button mnemonicParsing="false" onAction="#genVisArray" prefHeight="50.0" prefWidth="180.0"
+                 text="Generate Array" wrapText="true"/>
+      </HBox>
+      <HBox fx:id="paramBox" alignment="CENTER" spacing="20.0"/>
+
+      <Label alignment="CENTER" prefHeight="18.0" prefWidth="105.0" text="Preview">
+         <font>
+            <Font size="21.0"/>
+         </font>
+      </Label>
+      <HBox fx:id="barContainer" alignment="BOTTOM_CENTER" prefHeight="255.0" prefWidth="800.0"
+            style="-fx-background-color: black; -fx-border-color: #006674; -fx-border-radius: 5;"/>
+      <HBox alignment="CENTER" spacing="30.0">
+         <Button fx:id ="goToVisualizeBtn" mnemonicParsing="false" onAction="#goToVisualizer" prefHeight="50.0" prefWidth="250.0"
+                 text="Visualize a Sorting Algorithm"/>
+         <Button mnemonicParsing="false" onAction="#goToComparison" prefHeight="50.0" prefWidth="250.0" text="Compare Between Algorithms"/>
+      </HBox>
+   </VBox>
 </AnchorPane>
