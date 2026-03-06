@@ -36,9 +36,9 @@ public class QuickSort<E extends Comparable<E>> extends SortingStrategy<E>{
      */
     private int randomizedPartition(List<E> list, int start, int end,
                                     Comparator<E> comparator, SortingMetrics<E> metrics) {
-        int swapIdx = (int)(Math.random()*((end - 1) - start)) + start;
+        int swapIdx = (int)(Math.random()*(end - start)) + start;
         Collections.swap(list, swapIdx, end - 1);
-        super.addToMetrics(new SwapStep<>(swapIdx, list.size() - 1), metrics);
+        super.addToMetrics(new SwapStep<>(swapIdx, end - 1), metrics);
         return partition(list, start, end, comparator, metrics);
     }
 
