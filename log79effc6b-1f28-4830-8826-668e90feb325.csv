@@ -1,3 +1,0 @@
-Algorithm,Comparisons,Swaps,Writes,Min Runtime,Max Runtime,Mean Runtime
-StringProperty [value: BUBBLE],LongProperty [value: 1140],LongProperty [value: 228],LongProperty [value: 0],DoubleProperty [value: 0.240062],DoubleProperty [value: 0.4476253333333333]
-StringProperty [value: SELECTION],LongProperty [value: 570],LongProperty [value: 51],LongProperty [value: 0],DoubleProperty [value: 0.050346],DoubleProperty [value: 0.07682133333333334]
