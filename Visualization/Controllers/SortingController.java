@@ -28,7 +28,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class sortingController implements Initializable {
+public class SortingController implements Initializable {
 
     @FXML
     private ComboBox<SortingAlgorithm> algorithmSelector;
@@ -147,27 +147,18 @@ public class sortingController implements Initializable {
         timeline.getKeyFrames().add(sortedKF);
         timeline.setOnFinished(e -> {
             isVisualizing = false;
-            showStats();
+            setMetricLabels();
+            CommonUtils.showToast(toast, 5);
         });
         timeline.play();
     }
 
-    void showStats(){
+    void setMetricLabels(){
         swapsLabel.setText(String.valueOf(metrics.getSwapCount()));
         comparisonsLabel.setText(String.valueOf(metrics.getComparisonCount()));
         writesLabel.setText(String.valueOf(metrics.getSetCount()));
-
-        TranslateTransition fadeIn = new TranslateTransition(Duration.millis(300), toast);
-        fadeIn.setByY(-400);
-
-        PauseTransition stay = new PauseTransition(Duration.seconds(5));
-
-        TranslateTransition fadeOut = new TranslateTransition(Duration.millis(300), toast);
-        fadeOut.setByY(400);
-
-        SequentialTransition seq = new SequentialTransition(fadeIn, stay, fadeOut);
-        seq.play();
     }
+
     @FXML
     private void goToArrayGen(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(

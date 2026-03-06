@@ -2,21 +2,18 @@ package Visualization.Controllers;
 
 import Visualization.Enums.ArrayGenMode;
 import Visualization.VisualizationBars;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import Generator.ArrayGenerator;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +22,14 @@ import java.util.*;
 
 import static Visualization.Controllers.CommonUtils.createNumberFormatter;
 
-public class arrayGenController implements Initializable {
+public class ArrayGenController implements Initializable {
 
+
+    @FXML
+    private VBox toast;
+
+    @FXML
+    private Label toastHeader;
 
     @FXML
     private ComboBox<ArrayGenMode> arrayModeSelector;
@@ -52,6 +55,9 @@ public class arrayGenController implements Initializable {
 
     @FXML
     private Button goToVisualizeBtn;
+
+    @FXML
+    private Button goToComparisonBtn;
 
     VisualizationBars<Integer> visualizationBars;
 
@@ -80,6 +86,7 @@ public class arrayGenController implements Initializable {
         toField.setText("100");
         size.setText("20");
         goToVisualizeBtn.setDisable(true);
+        goToComparisonBtn.setDisable(true);
 
     }
 
@@ -87,12 +94,22 @@ public class arrayGenController implements Initializable {
     @FXML
     public void genVisArray() throws IOException {
         generateArray();
+        if (arr.isEmpty())
+            return;
+
+        goToComparisonBtn.setDisable(false);
+
+
         if (arr.size() > 250) {
             ArrayVisManager.getInstance().loadSnapshot(arr, visualizationBars); //adding them as is
             goToVisualizeBtn.setDisable(true); // prevent user from trying to visualize it
+            toastHeader.setText("Array has been generated but is too large to visualize");
+            CommonUtils.showToast(toast, 2);
             return;
         }
         goToVisualizeBtn.setDisable(false);
+        toastHeader.setText("Array has been generated");
+        CommonUtils.showToast(toast, 1);
         linkToVisBars();
 
     }

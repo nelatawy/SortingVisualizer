@@ -24,7 +24,11 @@ import java.util.*;
 
 public class ComparisonController implements Initializable {
 
+    @FXML
+    private VBox toast;
 
+    @FXML
+    private Label toastHeader;
 
     static class SortStat {
 
@@ -90,7 +94,7 @@ public class ComparisonController implements Initializable {
         TableColumn<SortStat, String> name = new TableColumn<>("Name");
         name.setCellValueFactory(data -> data.getValue().algorithm);
 
-        TableColumn<SortStat, Number> sizes = new TableColumn<>("Name");
+        TableColumn<SortStat, Number> sizes = new TableColumn<>("Size");
         sizes.setCellValueFactory(data -> data.getValue().size);
 
         TableColumn<SortStat, Number> comparisons = new TableColumn<>("Comparisons");
@@ -142,11 +146,12 @@ public class ComparisonController implements Initializable {
 
         HBox algoStats = new HBox();
         algoStats.getChildren().add(new Label(checkBox.getText()));
-        SortingMetrics<Integer> metrics = new SortingMetrics<>();
+
         SortingStrategy<Integer> strategy = CommonUtils.getSortingAlgorithm(SortingAlgorithm.valueOf(checkBox.getText()));
 
         for (int i = 0; i < runs; i++) {
             long start = System.nanoTime();
+            SortingMetrics<Integer> metrics = new SortingMetrics<>();
             strategy.sort(new ArrayList<>(arr), Comparator.naturalOrder(), metrics);
             long end = System.nanoTime();
             double runtime = (end - start)/1e6;
@@ -190,6 +195,9 @@ public class ComparisonController implements Initializable {
             outStr.append(stat.toString()).append("\n");
         }
         Files.writeString(path,outStr.toString(), StandardOpenOption.APPEND);
+
+        toastHeader.setText("Saved stats to " +  path.toString());
+        CommonUtils.showToast(toast, 3);
         return;
 
     }

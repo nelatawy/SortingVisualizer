@@ -53,7 +53,7 @@ public class QuickSort<E extends Comparable<E>> extends SortingStrategy<E>{
         if (list == null || start >= end - 1) {
             return;
         }
-        int pivot_idx = partition(list,start,end, comparator,  metrics);
+        int pivot_idx = randomizedPartition(list,start,end, comparator,  metrics);
         quickSort(list, start, pivot_idx, comparator, metrics);
         quickSort(list, pivot_idx + 1, end, comparator, metrics);
         // since we are passing a sublist then we are passing a view to the same array

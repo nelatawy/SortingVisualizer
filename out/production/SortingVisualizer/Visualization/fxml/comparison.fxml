@@ -36,4 +36,10 @@
       <Button mnemonicParsing="false" onAction="#goToArrayGen" prefHeight="27.0" prefWidth="210.0" text="Generate another array" />
     </VBox>
 
+    <HBox alignment="CENTER" AnchorPane.bottomAnchor="-180.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <VBox fx:id="toast" alignment="CENTER" prefHeight="150.0" prefWidth="300.0">
+            <Label fx:id="toastHeader" alignment="CENTER" prefHeight="24.0" prefWidth="249.0" />
+        </VBox>
+    </HBox>
+
 </AnchorPane>

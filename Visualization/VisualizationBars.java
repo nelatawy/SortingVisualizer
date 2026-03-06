@@ -22,8 +22,6 @@ public class VisualizationBars<T> {
     private final DoubleProperty max;
     private final DoubleProperty min;
 
-    private DoubleBinding maxBinding;
-    private DoubleBinding baseBinding;
     private final DoubleProperty containerHeight;
 
     public enum Label {
@@ -41,14 +39,6 @@ public class VisualizationBars<T> {
         this.containerHeight = new SimpleDoubleProperty(containerHeight);
         this.max = new SimpleDoubleProperty((int)-1e9);
         this.min = new SimpleDoubleProperty((int)1e9);
-//        this.baseBinding = Bindings.createDoubleBinding(
-//                ()-> min.get() - 1,
-//                min
-//        );
-//        this.maxBinding = Bindings.createDoubleBinding(
-//                ()-> max.get() - min.get(),
-//                min, max
-//        );
     }
 
     public VisualizationBars(VisualizationBars<T> other) {
@@ -59,14 +49,7 @@ public class VisualizationBars<T> {
         this.containerHeight = new SimpleDoubleProperty(other.containerHeight.get());
         this.max = new SimpleDoubleProperty(other.max.get());
         this.min = new SimpleDoubleProperty(other.min.get());
-//        this.baseBinding = Bindings.createDoubleBinding(
-//                ()-> min.get() - 1,
-//                min
-//        );
-//        this.maxBinding = Bindings.createDoubleBinding(
-//                ()-> max.get() - min.get(),
-//                min, max
-//        );
+
 
         for (int i = 0; i < other.bars.size(); i++) {
             Rectangle copy = copyRectangle(other.bars.get(i));
