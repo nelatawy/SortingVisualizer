@@ -15,10 +15,12 @@ import javafx.scene.shape.Rectangle;
 import Generator.ArrayGenerator;
 import javafx.stage.FileChooser;
 
+import javax.swing.plaf.multi.MultiFileChooserUI;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static Visualization.Controllers.CommonUtils.createNumberFormatter;
 
@@ -46,9 +48,9 @@ public class ArrayGenController implements Initializable {
 
     private FileChooser fileChooser;
 
-    private File selectedFile;
+    private List<File> selectedFiles;
 
-    private Label fileName;
+    private Label fileNames;
 
     @FXML
     private HBox barContainer;
@@ -71,7 +73,7 @@ public class ArrayGenController implements Initializable {
 
         arrayModeSelector.getItems().addAll(ArrayGenMode.values());
         fileChooser = new FileChooser();
-        fileName = new Label();
+        fileNames = new Label();
 
         fromField = new TextField();
         toField = new TextField();
@@ -126,7 +128,17 @@ public class ArrayGenController implements Initializable {
             case SORTED -> ArrayGenerator.generateSortedArray(arraySize, from, to, false);
             case REVERSED -> ArrayGenerator.generateSortedArray(arraySize, from, to, true);
             case RANDOM -> ArrayGenerator.generateRandomArray(arraySize, from, to);
-            case FILE -> ArrayGenerator.getArrayFromFile(selectedFile.toPath());
+            case FILE -> {
+                List<Integer> array = new ArrayList<>();
+                selectedFiles.forEach(file -> {
+                    try {
+                        array.addAll(ArrayGenerator.getArrayFromFile(file.toPath()));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                yield array;
+            }
             case null -> new ArrayList<>();
         };
 
@@ -161,16 +173,16 @@ public class ArrayGenController implements Initializable {
         ArrayGenMode mode = arrayModeSelector.getValue();
         if (mode == ArrayGenMode.FILE){
             paramBox.getChildren().clear();
-            Button fileButton = new  Button("Select File");
+            Button fileButton = new  Button("Select Files");
             fileButton.setOnAction(e -> {
-                selectedFile = fileChooser.showOpenDialog(((Node) event.getSource())
+                selectedFiles = fileChooser.showOpenMultipleDialog(((Node) event.getSource())
                         .getScene()
                         .getWindow());
-                fileName.setText(selectedFile.getName());
+                fileNames.setText(selectedFiles.stream().map(File::getName).collect(Collectors.joining(", ")) );
             });
 
             paramBox.getChildren().add(fileButton);
-            paramBox.getChildren().add(fileName);
+            paramBox.getChildren().add(fileNames);
         } else {
             paramBox.getChildren().clear();
             paramBox.getChildren().add(fromField);
