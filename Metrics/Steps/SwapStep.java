@@ -1,6 +1,9 @@
 package Metrics.Steps;
 
+import Visualization.TonePlayer;
 import Visualization.VisualizationBars;
+
+import javax.sound.sampled.LineUnavailableException;
 
 public class SwapStep<E> implements SortingStep<E> {
 
@@ -13,6 +16,7 @@ public class SwapStep<E> implements SortingStep<E> {
     }
     @Override
     public void visualizeOn(VisualizationBars<E> visualizationBars) {
+        int len = visualizationBars.bars.size();
         E first = visualizationBars.values.get(firstIdx);
         E second = visualizationBars.values.get(secondIdx);
 
@@ -20,6 +24,16 @@ public class SwapStep<E> implements SortingStep<E> {
         visualizationBars.updateHeightAt(secondIdx, first);
 
         visualizationBars.markBarAt(this.firstIdx, VisualizationBars.Label.FOCUS);
+        try{
+            TonePlayer.getInstance().playTone(150 * firstIdx / len , 50);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
         visualizationBars.markBarAt(this.secondIdx, VisualizationBars.Label.FOCUS);
+        try{
+            TonePlayer.getInstance().playTone(150 * secondIdx / len , 50);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
