@@ -40,4 +40,21 @@
 
       <Button mnemonicParsing="false" onAction="#goToArrayGen" prefHeight="50.0" prefWidth="250.0" text="Generate Another Array" />
    </VBox>
+   <HBox alignment="CENTER" layoutY="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox fx:id="toast" alignment="CENTER" prefHeight="150.0" prefWidth="300.0">
+         <Label fx:id="toastHeader" alignment="CENTER" prefHeight="24.0" prefWidth="249.0" text="Sorted !!" />
+         <HBox alignment="CENTER" spacing="10.0">
+            <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="120.0" text="Comparisons: " />
+            <Label fx:id="comparisonsLabel" prefHeight="18.0" prefWidth="50.0" text="?" />
+         </HBox>
+         <HBox alignment="CENTER" spacing="10.0">
+            <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="120.0" text="Writes: " />
+            <Label fx:id="writesLabel" prefHeight="18.0" prefWidth="50.0" text="?" />
+         </HBox>
+         <HBox alignment="CENTER" spacing="10.0">
+            <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="120.0" text="Swaps: " />
+            <Label fx:id="swapsLabel" prefHeight="18.0" prefWidth="50.0" text="?" />
+         </HBox>
+      </VBox>
+   </HBox>
 </AnchorPane>

@@ -217,3 +217,22 @@
     -fx-font-family: "Glass TTY VT220" ;
     -fx-background-color: transparent;
 }
+
+#toast {
+    -fx-background-color: #303030;
+    -fx-border-width: 5;
+    -fx-border-color: #00e5ff;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.8), 15, 0, 0, 0);
+}
+#toast .label {
+    -fx-font-size: 18;
+    -fx-alignment: center;
+}
+#toastHeader {
+    -fx-font-size: 30;
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.8), 15, 0, 0, 0);
+}

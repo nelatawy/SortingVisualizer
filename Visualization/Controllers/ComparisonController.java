@@ -17,7 +17,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class ComparisonController implements Initializable {
@@ -27,6 +29,7 @@ public class ComparisonController implements Initializable {
     static class SortStat {
 
         final StringProperty algorithm = new SimpleStringProperty();
+        final IntegerProperty size = new SimpleIntegerProperty();
         final LongProperty comparisons = new SimpleLongProperty();
         final LongProperty swaps = new SimpleLongProperty();
         final LongProperty writes = new SimpleLongProperty();
@@ -34,8 +37,11 @@ public class ComparisonController implements Initializable {
         final DoubleProperty maxRuntime = new SimpleDoubleProperty();
         final DoubleProperty meanRuntime = new SimpleDoubleProperty();
 
-        public SortStat(String algorithm, long comparisons, long swaps, long writes, double minRuntime, double maxRuntime, double meanRuntime) {
+        public SortStat(String algorithm,int size,
+                        long comparisons, long swaps, long writes,
+                        double minRuntime, double maxRuntime, double meanRuntime) {
             this.algorithm.set(algorithm);
+            this.size.set(size);
             this.comparisons.set(comparisons);
             this.swaps.set(swaps);
             this.writes.set(writes);
@@ -45,10 +51,12 @@ public class ComparisonController implements Initializable {
         }
         public String toString() {
             return  this.algorithm.get() + "," +
+                    this.size.get() + "," +
                     this.comparisons.get() + "," +
                     this.swaps.get() + "," +
                     this.writes.get() + "," +
                     this.minRuntime.get() + "," +
+                    this.maxRuntime.get() + "," +
                     this.meanRuntime.get();
         }
 
@@ -82,6 +90,9 @@ public class ComparisonController implements Initializable {
         TableColumn<SortStat, String> name = new TableColumn<>("Name");
         name.setCellValueFactory(data -> data.getValue().algorithm);
 
+        TableColumn<SortStat, Number> sizes = new TableColumn<>("Name");
+        sizes.setCellValueFactory(data -> data.getValue().size);
+
         TableColumn<SortStat, Number> comparisons = new TableColumn<>("Comparisons");
         comparisons.setCellValueFactory(data -> data.getValue().comparisons);
 
@@ -100,16 +111,20 @@ public class ComparisonController implements Initializable {
         TableColumn<SortStat, Number> meanRuntime = new TableColumn<>("Mean Runtime");
         meanRuntime.setCellValueFactory(data -> data.getValue().meanRuntime);
 
-        algorithmStats.getColumns().addAll(name, comparisons, swaps, writes, minRuntime, maxRuntime, meanRuntime);
+        algorithmStats.getColumns().addAll(name,sizes,comparisons, swaps, writes, minRuntime, maxRuntime, meanRuntime);
 
     }
 
     @FXML
     private void runComparison(ActionEvent actionEvent) {
-        System.out.println(runCount.getText());
-        for (Node node : algorithmCheckboxes.getChildren()){
-            addAlgorithmStats((CheckBox)  node);
-        }
+        Thread sortingThread = new Thread(()->{
+            System.out.println(runCount.getText());
+            for (Node node : algorithmCheckboxes.getChildren()){
+                    addAlgorithmStats((CheckBox)  node);
+
+            }
+        });
+        sortingThread.start();
     }
 
     private void addAlgorithmStats(CheckBox checkBox) {
@@ -136,9 +151,9 @@ public class ComparisonController implements Initializable {
             long end = System.nanoTime();
             double runtime = (end - start)/1e6;
 
-            comparisonCnt = metrics.getComparisonCount();
-            swapCnt = metrics.getSwapCount();
-            setCnt = metrics.getSetCount();
+            comparisonCnt += metrics.getComparisonCount();
+            swapCnt += metrics.getSwapCount();
+            setCnt += metrics.getSetCount();
 
             totalRuntime += runtime;
             minRuntime = Math.min(minRuntime, runtime);
@@ -150,7 +165,8 @@ public class ComparisonController implements Initializable {
         algorithmStats.getItems().add(
                 new SortStat(
                         checkBox.getText(),
-                        comparisonCnt, swapCnt, setCnt,
+                        arr.size(),
+                        comparisonCnt/runs, swapCnt/runs, setCnt/runs,
                         minRuntime, maxRuntime, meanRuntime
                 ));
     }
@@ -163,13 +179,24 @@ public class ComparisonController implements Initializable {
     @FXML
     private void saveAlgorithmStats(ActionEvent actionEvent) throws IOException {
         StringBuilder outStr = new StringBuilder();
-        outStr.append("Algorithm,Comparisons,Swaps,Writes,Min Runtime,Max Runtime,Mean Runtime\n");
+
+
+        Path path = Path.of("stats.csv");
+        if (!Files.exists(path)){
+            outStr.append("Algorithm,Size,Comparisons,Swaps,Writes,Min Runtime,Max Runtime,Mean Runtime\n");
+            Files.createFile(path);
+        }
         for (SortStat stat : algorithmStats.getItems() ){
             outStr.append(stat.toString()).append("\n");
         }
-        Files.writeString(Path.of("log" + UUID.randomUUID() + ".csv"),outStr.toString());
+        Files.writeString(path,outStr.toString(), StandardOpenOption.APPEND);
         return;
 
+    }
+
+    @FXML
+    private void goToArrayGen(ActionEvent actionEvent) throws IOException {
+        CommonUtils.goTo(actionEvent, "arrayGen");
     }
 
 

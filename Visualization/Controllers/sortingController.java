@@ -5,8 +5,7 @@ import Metrics.Steps.SortingStep;
 import Strategies.*;
 import Visualization.Enums.SortingAlgorithm;
 import Visualization.VisualizationBars;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,7 +22,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
@@ -39,6 +38,21 @@ public class sortingController implements Initializable {
 
     @FXML
     private Slider speedSlider;
+
+
+    @FXML
+    private VBox toast;
+
+    @FXML
+    private Label swapsLabel;
+
+    @FXML
+    private Label comparisonsLabel;
+
+    @FXML
+    private Label writesLabel;
+
+
 
     private Timeline timeline;
 
@@ -109,7 +123,10 @@ public class sortingController implements Initializable {
         SortingStrategy<Integer> sortingAlgorithm = CommonUtils.getSortingAlgorithm(algorithmSelector.getValue());
         sortingAlgorithm.sort(arr, Comparator.naturalOrder(), metrics);
         priorlySorted = true;
-        visualize(metrics.getSteps());
+        new Thread(() -> {
+            visualize(metrics.getSteps());
+        }).start();
+
 
     }
 
@@ -130,10 +147,27 @@ public class sortingController implements Initializable {
         timeline.getKeyFrames().add(sortedKF);
         timeline.setOnFinished(e -> {
             isVisualizing = false;
+            showStats();
         });
         timeline.play();
     }
 
+    void showStats(){
+        swapsLabel.setText(String.valueOf(metrics.getSwapCount()));
+        comparisonsLabel.setText(String.valueOf(metrics.getComparisonCount()));
+        writesLabel.setText(String.valueOf(metrics.getSetCount()));
+
+        TranslateTransition fadeIn = new TranslateTransition(Duration.millis(300), toast);
+        fadeIn.setByY(-400);
+
+        PauseTransition stay = new PauseTransition(Duration.seconds(5));
+
+        TranslateTransition fadeOut = new TranslateTransition(Duration.millis(300), toast);
+        fadeOut.setByY(400);
+
+        SequentialTransition seq = new SequentialTransition(fadeIn, stay, fadeOut);
+        seq.play();
+    }
     @FXML
     private void goToArrayGen(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
